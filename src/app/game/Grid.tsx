@@ -9,9 +9,18 @@ interface GridProps {
   children: React.ReactNode;
 }
 
+/**
+ * Component that draws a grid on a canvas based on a previously loaded asset.
+ * The grid's dimensions are determined by the provided width and height props.
+ *
+ * @component
+ * @param width - The width of the grid.
+ * @param height - The height of the grid.
+ * @param children - The child components to be rendered within the grid.
+ */
 function Grid({ width, height, children }: GridProps) {
   const ctx = useContext(CanvasContext);
-//   const { width, height } = useWindowSize();
+  //   const { width, height } = useWindowSize();
 
   useEffect(() => {
     if (!ctx) return;
