@@ -7,6 +7,16 @@ import { connect } from 'react-redux';
 
 type AssetLoaderProps = { children?: React.ReactNode } & ReturnType<typeof mapStateToProps>;
 
+/**
+ * AssetLoader component.
+ * This component serves as a place where assets are preloaded and then added to Redux,
+ * so that their references are stored in one place.
+ * Only when all assets are loaded, the children that depend on them will be rendered.
+ *
+ * @param children - The children components.
+ * @param areAssetsLoaded - Flag indicating whether assets are loaded.
+ * @returns The rendered component.
+ */
 function AssetLoader({ children, areAssetsLoaded }: AssetLoaderProps) {
   return (
     <>
