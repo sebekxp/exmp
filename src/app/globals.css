@@ -5,16 +5,9 @@
 :root {
   --background: #1f1f1f;
   --whitePrimary: hsla(0, 0%, 100%, 0.92);
-  --redPrimary: #fa586a;
-  --greyPrimary: #232323;
-  --greySecondary: #2c2c2c;
 }
 
 body {
   background-color: var(--background);
   color: var(--whitePrimary);
-}
-
-:focus {
-  outline-color: var(--whitePrimary);
 }
