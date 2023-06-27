@@ -3,7 +3,7 @@ import { useContext, useEffect, useMemo, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useAppDispatch } from '../hooks/redux';
 import { useDynamicGameDimensions } from '../hooks/useDynamicGameDimensions';
-import { updateProgress } from '../redux/slices/gameStatus';
+import { updateGameStatus } from '../redux/slices/gameStatus';
 import { RootState } from '../redux/store';
 import { generateRandomStars, revealVisibleTiles } from '../utils/canvasUtils';
 import { generateMatrix, updateMatrix } from '../utils/matrix';
@@ -24,9 +24,8 @@ type GridPropsType = GridProps & ReturnType<typeof mapStateToProps>;
  * @param props.children - The child components to be rendered.
  * @param props.x - The x-coordinate of the character.
  * @param props.y - The y-coordinate of the character.
- * @param props.isGameStarted - Indicates whether the game has started or not.
  */
-function Grid({ children, x, y, isGameStarted }: GridPropsType) {
+function Grid({ children, x, y }: GridPropsType) {
   const dispatch = useAppDispatch();
   const ctx = useContext(CanvasContext);
   const secondOverlayRef = useRef<HTMLCanvasElement | null>(null);
@@ -49,7 +48,7 @@ function Grid({ children, x, y, isGameStarted }: GridPropsType) {
    */
   useEffect(() => {
     matrix = updateMatrix(matrix, x, y, rows, columns, radius);
-  }, [x, y, isGameStarted]);
+  }, [x, y]);
 
   /**
    * Update the game progress based on visited tiles
@@ -57,7 +56,7 @@ function Grid({ children, x, y, isGameStarted }: GridPropsType) {
   useEffect(() => {
     const visitedTiles = matrix.flat().filter((value) => value === 1).length;
     const progress = visitedTiles / allTiles;
-    dispatch(updateProgress(progress));
+    dispatch(updateGameStatus(progress));
   }, [x, y, matrix, dispatch]);
 
   /**
@@ -65,7 +64,7 @@ function Grid({ children, x, y, isGameStarted }: GridPropsType) {
    */
   useEffect(() => {
     revealVisibleTiles(ctx, matrix, tileSize);
-  }, [ctx, x, y, tileSize, matrix, isGameStarted]);
+  }, [ctx, x, y, tileSize, matrix]);
 
   return (
     <>
@@ -75,9 +74,6 @@ function Grid({ children, x, y, isGameStarted }: GridPropsType) {
   );
 }
 
-const mapStateToProps = (state: RootState) => ({
-  ...state.hero,
-  ...state.gameStatus,
-});
+const mapStateToProps = (state: RootState) => ({ ...state.hero });
 
 export default connect(mapStateToProps)(Grid);
