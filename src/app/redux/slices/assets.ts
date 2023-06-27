@@ -31,11 +31,14 @@ const assetsSlice = createSlice({
   initialState,
   reducers: {
     loadAsset(state, action: PayloadAction<PayloadType>) {
-      console.log('asset loaded: ', action.payload);
-      state[action.payload.key] = {
-        url: action.payload.url,
-        id: action.payload.id,
-        loaded: true,
+      return {
+        ...state,
+        [action.payload.key]: {
+          ...state[action.payload.key],
+          url: action.payload.url,
+          id: action.payload.id,
+          loaded: true,
+        },
       };
     },
   },
