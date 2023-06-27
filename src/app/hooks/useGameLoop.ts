@@ -1,22 +1,16 @@
-import { useState } from 'react';
 import { HeroState } from '../redux/slices/hero';
 import { useAnimationLoop } from './useAnimationLoop';
-import { useKeyPress } from './useKeyPress';
+import { useKeyDown } from './useKeyDown';
 import { useMoveCharacter } from './useMoveCharacter';
 
 /**
- * Hook that sets up the game loop and handles game logic.
- * @param hero - The current hero state.
- * @returns An object containing the isVisible state.
+ * Custom hook for managing the game loop and character movement based on user input.
+ * @param hero - The state of the hero character.
+ * @param isGameStarted - Flag indicating whether the game has started.
  */
-export const useGameLoop = (hero: HeroState) => {
-  const [isVisible, setIsVisible] = useState(true);
-  const [isUpdateRequired, setIsUpdateRequired] = useState(false);
+export const useGameLoop = (hero: HeroState, isGameStarted: boolean) => {
+  const moveCharacter = useMoveCharacter(hero, isGameStarted);
 
-  const moveCharacter = useMoveCharacter(hero, setIsUpdateRequired);
-
-  useKeyPress(moveCharacter);
-  useAnimationLoop(isUpdateRequired, setIsUpdateRequired, setIsVisible);
-
-  return { isVisible };
+  useKeyDown(moveCharacter);
+  useAnimationLoop();
 };
