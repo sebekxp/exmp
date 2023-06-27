@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import heroReducer from './slices/hero';
 import assetsReducer from './slices/assets';
+import gameStatusReducer from './slices/gameStatus';
 
 export const store = configureStore({
   reducer: {
     hero: heroReducer,
     assets: assetsReducer,
+    gameStatus: gameStatusReducer,
   },
 });
 
