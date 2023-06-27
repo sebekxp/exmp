@@ -1,33 +1,32 @@
-import { Dispatch, SetStateAction, useCallback } from 'react';
-import { isMapCollision } from '../game/collision';
-import { MOVE_DIRECTIONS } from '../game/constans';
-import { HeroState, move } from '../redux/slices/hero';
+import { useCallback } from 'react';
+import { isMapCollision } from '../utils/collision';
+import { Directions, MOVE_DIRECTIONS } from '../game/constants';
+import { HeroState, move, updateCurrentDirection } from '../redux/slices/hero';
 import { useAppDispatch } from './redux';
+import { useDynamicGameDimensions } from './useDynamicGameDimensions';
+import { startGame } from '../redux/slices/gameStatus';
 
 /**
- * Hook that handles character movement based on key presses.
- * @param hero - The current hero state.
- * @param setIsUpdateRequired - Callback function to set the update requirement.
- * @returns The moveCharacter function to be used as a key press event handler.
+ * Custom hook for handling character movement based on user input.
+ * @param hero - The state of the hero character.
+ * @param isGameStarted - Flag indicating whether the game has started.
+ * @returns Callback function for moving the character.
  */
-export function useMoveCharacter(
-  hero: HeroState,
-  setIsUpdateRequired: Dispatch<SetStateAction<boolean>>,
-) {
+export function useMoveCharacter(hero: HeroState, isGameStarted: boolean) {
   const dispatch = useAppDispatch();
+  const { rows, columns } = useDynamicGameDimensions();
 
-  /**
-   * Handles character movement based on key presses.
-   * @param event - The key press event.
-   */
   const moveCharacter = useCallback(
     (event: KeyboardEvent) => {
       const key = event.key;
-      if (MOVE_DIRECTIONS[key]) {
+      if (isMoveDirectionType(key)) {
         const [x, y] = MOVE_DIRECTIONS[key];
-        if (!isMapCollision(hero.x + x, hero.y + y)) {
-          setIsUpdateRequired(true);
+        if (!isMapCollision(hero.x + x, hero.y + y, rows, columns)) {
           dispatch(move([x, y]));
+          dispatch(updateCurrentDirection(key));
+          if (!isGameStarted) {
+            dispatch(startGame());
+          }
         }
       }
     },
@@ -35,4 +34,15 @@ export function useMoveCharacter(
   );
 
   return moveCharacter;
+}
+
+/**
+ * Checks if the given direction is a valid move direction.
+ * @param direction - The direction to check.
+ * @returns Indicates whether the direction is a valid move direction.
+ */
+function isMoveDirectionType(direction: string): direction is Directions {
+  return ['w', 'a', 's', 'd', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(
+    direction,
+  );
 }
