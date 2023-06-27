@@ -2,28 +2,29 @@
 
 import { connect } from 'react-redux';
 import { useCanvas } from '../hooks/useCanvas';
+import { useCanvasClear } from '../hooks/useCanvasClear';
 import { useGameLoop } from '../hooks/useGameLoop';
+import { useWindowSize } from '../hooks/useWindowResize';
 import { RootState } from '../redux/store';
 import CanvasContext from './canvasContext';
-import { HEIGHT, WIDTH } from './constans';
 
 type GameProps = { children?: React.ReactNode } & ReturnType<typeof mapStateToProps>;
 
-function Game({ children, hero }: GameProps) {
-  console.log(hero);
+function Game({ children, hero, isGameStarted }: GameProps) {
   const [canvasRef, ctx] = useCanvas();
-  const { isVisible } = useGameLoop(hero);
+  const { width, height } = useWindowSize();
+
+  useCanvasClear(ctx, hero);
+  useGameLoop(hero, isGameStarted);
 
   return (
     <CanvasContext.Provider value={ctx}>
-      <div className="relative">
-        <canvas ref={canvasRef} width={WIDTH} height={HEIGHT} className="absolute z-10" />
-        {isVisible && children}
-      </div>
+      <canvas ref={canvasRef} width={width} height={height} className="fixed z-10" />
+      {children}
     </CanvasContext.Provider>
   );
 }
 
-const mapStateToProps = (state: RootState) => ({ hero: state.hero });
+const mapStateToProps = (state: RootState) => ({ hero: state.hero, ...state.gameStatus });
 
 export default connect(mapStateToProps)(Game);

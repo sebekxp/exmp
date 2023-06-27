@@ -1,19 +1,24 @@
 import AssetLoader from './game/AssetLoader';
 import Game from './game/Game';
-import Grid from './game/Grid';``
+import GameProgress from './game/GameProgress';
+import Grid from './game/Grid';
 import Hero from './game/Hero';
-import { HEIGHT, WIDTH } from './game/constans';
+import MapExploredModal from './game/MapExploredModal';
+import GameStartText from './game/GameStartText';
 
 export default function Home() {
   return (
     <main>
+      <GameStartText />
       <Game>
-        <Grid width={WIDTH} height={HEIGHT}>
+        <Grid>
           <AssetLoader>
             <Hero />
+            <GameProgress />
           </AssetLoader>
         </Grid>
       </Game>
+      <MapExploredModal />
     </main>
   );
 }
