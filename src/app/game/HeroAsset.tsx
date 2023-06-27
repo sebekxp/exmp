@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { useRef } from 'react';
 import { useAppDispatch } from '../hooks/redux';
 import { loadAsset } from '../redux/slices/assets';
-import { MAP_DIMENSIONS } from './constans';
 
 export function HeroAsset() {
   const dispatch = useAppDispatch();
@@ -12,12 +11,11 @@ export function HeroAsset() {
   return (
     <Image
       id={id}
-      className="imgaes-buffer invisible"
+      className="imgaes-buffer invisible z-10"
       ref={imgRef}
-      src={'/hero.webp'}
+      src={'/sprites.png'}
       alt="Hero"
-      width={MAP_DIMENSIONS.TILE_SIZE}
-      height={MAP_DIMENSIONS.TILE_SIZE}
+      fill={true}
       onLoad={() => dispatch(loadAsset({ key: 'HeroAsset', url: '/hero.webp', id: id }))}
     />
   );
