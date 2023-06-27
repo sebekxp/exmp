@@ -1,13 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useAppDispatch } from '../hooks/redux';
 import { useCanvas } from '../hooks/useCanvas';
 import { useCanvasClear } from '../hooks/useCanvasClear';
 import { useGameLoop } from '../hooks/useGameLoop';
 import { useWindowSize } from '../hooks/useWindowResize';
-import { stopGame } from '../redux/slices/gameStatus';
 import { RootState } from '../redux/store';
 import CanvasContext from './canvasContext';
 
