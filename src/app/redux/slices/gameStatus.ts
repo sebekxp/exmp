@@ -2,19 +2,27 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface GameStatusState {
   mapExploredProgress: number;
-  isGameStarted: boolean;
+  status: 'started' | 'not-started' | 'stoped';
 }
 
 const initialState: GameStatusState = {
-  mapExploredProgress: 10,
-  isGameStarted: false,
+  mapExploredProgress: 0,
+  status: 'not-started',
 };
 
 const gameStatusSlice = createSlice({
   name: 'GameStatus',
   initialState,
   reducers: {
-    updateProgress(state, action: PayloadAction<number>) {
+    updateGameStatus(state, action: PayloadAction<number>) {
+      if (state.mapExploredProgress === 1) {
+        return {
+          ...state,
+          mapExploredProgress: action.payload,
+          status: 'stoped',
+        };
+      }
+
       return {
         ...state,
         mapExploredProgress: action.payload,
@@ -23,17 +31,17 @@ const gameStatusSlice = createSlice({
     startGame(state) {
       return {
         ...state,
-        isGameStarted: true,
+        status: 'started',
       };
     },
     stopGame(state) {
       return {
         ...state,
-        isGameStarted: false,
+        status: 'stoped',
       };
     },
   },
 });
 
-export const { updateProgress, startGame, stopGame } = gameStatusSlice.actions;
+export const { updateGameStatus, startGame, stopGame } = gameStatusSlice.actions;
 export default gameStatusSlice.reducer;
