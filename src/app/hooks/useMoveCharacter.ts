@@ -9,22 +9,23 @@ import { startGame } from '../redux/slices/gameStatus';
 /**
  * Custom hook for handling character movement based on user input.
  * @param hero - The state of the hero character.
- * @param isGameStarted - Flag indicating whether the game has started.
+ * @param status - Flag indicating whether the game has started, is ongoing, or has ended.
  * @returns Callback function for moving the character.
  */
-export function useMoveCharacter(hero: HeroState, isGameStarted: boolean) {
+export function useMoveCharacter(hero: HeroState, status: 'started' | 'not-started' | 'stoped') {
   const dispatch = useAppDispatch();
   const { rows, columns } = useDynamicGameDimensions();
 
   const moveCharacter = useCallback(
     (event: KeyboardEvent) => {
+      if (status === 'stoped') return;
       const key = event.key;
       if (isMoveDirectionType(key)) {
         const [x, y] = MOVE_DIRECTIONS[key];
         if (!isMapCollision(hero.x + x, hero.y + y, rows, columns)) {
           dispatch(move([x, y]));
           dispatch(updateCurrentDirection(key));
-          if (!isGameStarted) {
+          if (status === 'not-started') {
             dispatch(startGame());
           }
         }

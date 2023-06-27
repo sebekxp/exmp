@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { RootState } from '../redux/store';
 
 type GameStartTextProps = ReturnType<typeof mapStateToProps>;
-function GameStartText({ isGameStarted }: GameStartTextProps) {
-  if (isGameStarted) return null;
+function GameStartText({ status }: GameStartTextProps) {
+  if (status !== 'not-started') return null;
 
   return (
     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
