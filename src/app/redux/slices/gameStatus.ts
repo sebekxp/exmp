@@ -21,7 +21,6 @@ const gameStatusSlice = createSlice({
       };
     },
     startGame(state) {
-      console.log('startGame');
       return {
         ...state,
         isGameStarted: true,
