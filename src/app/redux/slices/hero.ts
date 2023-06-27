@@ -1,13 +1,29 @@
+import { Directions } from '@/app/game/constants';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-export interface HeroState {
+export type HeroState = {
   x: number;
   y: number;
-}
+  directions: {
+    [key in Directions]: number;
+  };
+  currentDirection: Directions;
+};
 
 const initialState: HeroState = {
-  x: 6,
-  y: 6,
+  x: 11,
+  y: 11,
+  directions: {
+    w: 0,
+    a: 0,
+    s: 0,
+    d: 0,
+    ArrowUp: 0,
+    ArrowLeft: 0,
+    ArrowDown: 0,
+    ArrowRight: 0,
+  },
+  currentDirection: 'd',
 };
 
 const heroSlice = createSlice({
@@ -15,13 +31,25 @@ const heroSlice = createSlice({
   initialState,
   reducers: {
     move(state, action: PayloadAction<[number, number]>) {
-      console.log('move action: ', action.payload);
       const [x, y] = action.payload;
-      state.x += x;
-      state.y += y;
+      return {
+        ...state,
+        x: state.x + x,
+        y: state.y + y,
+      };
+    },
+    updateCurrentDirection(state, action: PayloadAction<Directions>) {
+      return {
+        ...state,
+        currentDirection: action.payload,
+        directions: {
+          ...state.directions,
+          [action.payload]: state.directions[action.payload] + 1,
+        },
+      };
     },
   },
 });
 
-export const { move } = heroSlice.actions;
+export const { move, updateCurrentDirection } = heroSlice.actions;
 export default heroSlice.reducer;
