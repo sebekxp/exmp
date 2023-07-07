@@ -20,16 +20,18 @@ export function useMoveCharacter(hero: HeroState, status: GameStatus) {
   const moveCharacter = useCallback(
     (event: KeyboardEvent) => {
       if (status === GAME_STATUS.STOPPED) return;
+
       const key = event.key;
-      if (isMoveDirectionType(key)) {
-        const [x, y] = MOVE_DIRECTIONS[key];
-        if (!isMapCollision(hero.x + x, hero.y + y, rows, columns)) {
-          dispatch(move([x, y]));
-          dispatch(updateCurrentDirection(key));
-          if (status === GAME_STATUS.NOT_STARTED) {
-            dispatch(startGame());
-          }
-        }
+      if (!isMoveDirectionType(key)) return;
+
+      const [x, y] = MOVE_DIRECTIONS[key];
+      if (isMapCollision(hero.x + x, hero.y + y, rows, columns)) return;
+
+      dispatch(move([x, y]));
+      dispatch(updateCurrentDirection(key));
+
+      if (status === GAME_STATUS.NOT_STARTED) {
+        dispatch(startGame());
       }
     },
     [columns, dispatch, hero.x, hero.y, rows, status],
