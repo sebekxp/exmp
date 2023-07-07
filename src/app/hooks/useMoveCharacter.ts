@@ -1,9 +1,10 @@
 import { useCallback } from 'react';
-import { Directions, MOVE_DIRECTIONS, MOVE_DIRECTIONS_LIST } from '../game/constants';
+import { MOVE_DIRECTIONS } from '../game/constants';
 import { startGame } from '../redux/slices/gameStatus';
 import { HeroState, move, updateCurrentDirection } from '../redux/slices/hero';
 import { GAME_STATUS, GameStatus } from '../types/gameStatus';
 import { isMapCollision } from '../utils/collision';
+import { isMoveDirectionType } from '../utils/isMoveDirectionType';
 import { useAppDispatch } from './redux';
 import { useDynamicGameDimensions } from './useDynamicGameDimensions';
 
@@ -38,13 +39,4 @@ export function useMoveCharacter(hero: HeroState, status: GameStatus) {
   );
 
   return moveCharacter;
-}
-
-/**
- * Checks if the given direction is a valid move direction.
- * @param direction - The direction to check.
- * @returns Indicates whether the direction is a valid move direction.
- */
-function isMoveDirectionType(direction: string): direction is Directions {
-  return MOVE_DIRECTIONS_LIST.includes(direction as Directions);
 }
