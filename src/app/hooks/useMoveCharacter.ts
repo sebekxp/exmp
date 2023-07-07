@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Directions, MOVE_DIRECTIONS } from '../game/constants';
+import { Directions, MOVE_DIRECTIONS, MOVE_DIRECTIONS_LIST } from '../game/constants';
 import { startGame } from '../redux/slices/gameStatus';
 import { HeroState, move, updateCurrentDirection } from '../redux/slices/hero';
 import { GAME_STATUS, GameStatus } from '../types/gameStatus';
@@ -44,7 +44,5 @@ export function useMoveCharacter(hero: HeroState, status: GameStatus) {
  * @returns Indicates whether the direction is a valid move direction.
  */
 function isMoveDirectionType(direction: string): direction is Directions {
-  return ['w', 'a', 's', 'd', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(
-    direction,
-  );
+  return MOVE_DIRECTIONS_LIST.includes(direction as Directions);
 }

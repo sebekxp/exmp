@@ -19,6 +19,17 @@ export type Directions =
   | 'ArrowLeft'
   | 'ArrowRight';
 
+export const MOVE_DIRECTIONS_LIST: Directions[] = [
+  'w',
+  'a',
+  's',
+  'd',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+];
+
 type MoveDirections = { [key in Directions]: number[] };
 
 /**
