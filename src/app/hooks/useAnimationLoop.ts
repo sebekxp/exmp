@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 /**
  * Hook that creates an animation loop using requestAnimationFrame.
@@ -7,9 +7,9 @@ export function useAnimationLoop() {
   /**
    * Callback function for the animation loop.
    */
-  const loop = () => {
+  const loop = useCallback(() => {
     requestAnimationFrame(loop);
-  };
+  }, []);
 
   useEffect(() => {
     // Start the animation loop by requesting the first animation frame
@@ -19,5 +19,5 @@ export function useAnimationLoop() {
     return () => {
       cancelAnimationFrame(animationFrame);
     };
-  }, []);
+  }, [loop]);
 }

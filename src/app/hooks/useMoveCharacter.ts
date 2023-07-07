@@ -32,7 +32,7 @@ export function useMoveCharacter(hero: HeroState, status: GameStatus) {
         }
       }
     },
-    [dispatch, hero.x, hero.y],
+    [columns, dispatch, hero.x, hero.y, rows, status],
   );
 
   return moveCharacter;

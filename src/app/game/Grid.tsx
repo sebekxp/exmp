@@ -57,7 +57,7 @@ function Grid({ children, x, y }: GridPropsType) {
     const visitedTiles = matrix.flat().filter((value) => value === 1).length;
     const progress = visitedTiles / allTiles;
     dispatch(updateGameStatus(progress));
-  }, [x, y, matrix, dispatch]);
+  }, [x, y, matrix, dispatch, allTiles]);
 
   /**
    * Reveal visible tiles on the canvas

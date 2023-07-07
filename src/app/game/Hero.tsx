@@ -35,7 +35,7 @@ function Hero({ x, y, id, loaded, currentDirection, directions }: HeroProps) {
     const { sx, sy, w, h } = HERO_SPRITES[spriteIndex][currentDirection];
 
     ctx.drawImage(img, sx, sy, w, h, dx, dy, w, h);
-  }, [ctx, x, y, loaded, id, currentDirection, tileSize]);
+  }, [ctx, x, y, loaded, id, currentDirection, tileSize, directions]);
 
   return null;
 }

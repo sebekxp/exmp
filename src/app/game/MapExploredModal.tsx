@@ -1,11 +1,12 @@
 'use client';
 import { connect } from 'react-redux';
 import { RootState } from '../redux/store';
+import { GAME_STATUS } from '../types/gameStatus';
 
 type MapExploredModalProps = ReturnType<typeof mapStateToProps>;
 
 function MapExploredModal({ status }: MapExploredModalProps) {
-  if (status !== 'stoped') return null;
+  if (status !== GAME_STATUS.STOPPED) return null;
 
   const handleStartNewGame = () => {
     window.location.reload();
