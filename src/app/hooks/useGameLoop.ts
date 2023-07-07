@@ -1,4 +1,5 @@
 import { HeroState } from '../redux/slices/hero';
+import { GameStatus } from '../types/gameStatus';
 import { useAnimationLoop } from './useAnimationLoop';
 import { useKeyDown } from './useKeyDown';
 import { useMoveCharacter } from './useMoveCharacter';
@@ -8,7 +9,7 @@ import { useMoveCharacter } from './useMoveCharacter';
  * @param hero - The state of the hero character.
  * @param status - Flag indicating whether the game has started, is ongoing, or has ended.
  */
-export const useGameLoop = (hero: HeroState, status: 'started' | 'not-started' | 'stoped') => {
+export const useGameLoop = (hero: HeroState, status: GameStatus) => {
   const moveCharacter = useMoveCharacter(hero, status);
   useKeyDown(moveCharacter);
   useAnimationLoop();

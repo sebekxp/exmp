@@ -1,13 +1,14 @@
+import { GAME_STATUS, GameStatus } from '@/app/types/gameStatus';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface GameStatusState {
   mapExploredProgress: number;
-  status: 'started' | 'not-started' | 'stoped';
+  status: GameStatus;
 }
 
 const initialState: GameStatusState = {
   mapExploredProgress: 0,
-  status: 'not-started',
+  status: GAME_STATUS.NOT_STARTED,
 };
 
 const gameStatusSlice = createSlice({
@@ -19,7 +20,7 @@ const gameStatusSlice = createSlice({
         return {
           ...state,
           mapExploredProgress: action.payload,
-          status: 'stoped',
+          status: GAME_STATUS.STOPPED,
         };
       }
 
@@ -31,13 +32,13 @@ const gameStatusSlice = createSlice({
     startGame(state) {
       return {
         ...state,
-        status: 'started',
+        status: GAME_STATUS.STARTED,
       };
     },
     stopGame(state) {
       return {
         ...state,
-        status: 'stoped',
+        status: GAME_STATUS.STOPPED,
       };
     },
   },
