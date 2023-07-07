@@ -11,7 +11,7 @@ function GameStartText({ status }: GameStartTextProps) {
       <h1 className="text-6xl text-center text-amber-400 font-bold">
         Memorize the Map Before Embarking on Your First Journey
       </h1>
-      <h3 className="text-2xl text-center animate-bounce">Get Moving and Begin Your Adventur!</h3>
+      <h3 className="text-2xl text-center animate-bounce">Get Moving and Begin Your Adventure!</h3>
     </div>
   );
 }
