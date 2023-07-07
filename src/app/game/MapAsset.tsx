@@ -11,6 +11,7 @@ export function MapAsset() {
       <Image
         className="relative p-5"
         id={id}
+        priority={true}
         src="/map.png"
         alt="Map"
         fill={true}

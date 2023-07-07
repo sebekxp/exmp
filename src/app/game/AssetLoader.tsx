@@ -19,11 +19,11 @@ type AssetLoaderProps = { children?: React.ReactNode } & ReturnType<typeof mapSt
  */
 function AssetLoader({ children, areAssetsLoaded }: AssetLoaderProps) {
   return (
-    <>
+    <div className="relative">
       <MapAsset />
       <HeroAsset />
       {areAssetsLoaded && children}
-    </>
+    </div>
   );
 }
 
