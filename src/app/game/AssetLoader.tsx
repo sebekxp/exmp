@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { areAllAssetsLoadedSelector } from '../redux/selectors/assetsSelectors';
 import { RootState } from '../redux/store';
 import { HeroAsset } from './HeroAsset';
-import { MapAsset } from './MapAssset';
+import { MapAsset } from './MapAsset';
 
 type AssetLoaderProps = { children?: React.ReactNode } & ReturnType<typeof mapStateToProps>;
 
