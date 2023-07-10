@@ -18,6 +18,11 @@ export function useMoveCharacter(hero: HeroState, status: GameStatus) {
   const dispatch = useAppDispatch();
   const { rows, columns } = useDynamicGameDimensions();
 
+  /**
+   * Callback function for moving the character based on user input.
+   * @param {KeyboardEvent} event - The keyboard event triggered by the user.
+   * 
+   */
   const moveCharacter = useCallback(
     (event: KeyboardEvent) => {
       if (status === GAME_STATUS.STOPPED) return;
