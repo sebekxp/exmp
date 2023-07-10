@@ -1,15 +1,21 @@
 'use client';
 import { connect } from 'react-redux';
 import { RootState } from '../redux/store';
+import { GAME_STATUS } from '../types/gameStatus';
 
 type GameProgressProps = ReturnType<typeof mapStateToProps>;
-function GameProgress({ percent }: GameProgressProps) {
+function GameProgress({ mapExploredProgress, status }: GameProgressProps) {
   const circumference = 40 * 2 * Math.PI;
+
+  if (status === GAME_STATUS.NOT_STARTED) {
+    return null;
+  }
+
 
   return (
     <div className="container">
       <div className="fixed inset-x-0 top-0 z-50 bg-sky-200">
-        <div className="h-2 bg-sky-900" style={{ width: `${percent * 100}%` }} />
+        <div className="h-2 bg-sky-900" style={{ width: `${mapExploredProgress * 100}%` }} />
       </div>
 
       <div className="fixed inline-flex items-center justify-center overflow-hidden rounded-full bottom-8 left-8 z-10">
@@ -27,7 +33,7 @@ function GameProgress({ percent }: GameProgressProps) {
             className="text-sky-900"
             strokeWidth="12"
             strokeDasharray={circumference}
-            strokeDashoffset={circumference - ((percent * 100) / 100) * circumference}
+            strokeDashoffset={circumference - ((mapExploredProgress * 100) / 100) * circumference}
             strokeLinecap="round"
             stroke="currentColor"
             fill="transparent"
@@ -36,14 +42,16 @@ function GameProgress({ percent }: GameProgressProps) {
             cy="40"
           />
         </svg>
-        <span className="absolute text-lg text-900">{`${(percent * 100).toFixed(2)}%`}</span>
+        <span className="absolute text-lg text-900">{`${(mapExploredProgress * 100).toFixed(
+          2,
+        )}%`}</span>
       </div>
     </div>
   );
 }
 
 const mapStateToProps = (state: RootState) => ({
-  percent: state.gameStatus.mapExploredProgress,
+  ...state.gameStatus,
 });
 
 export default connect(mapStateToProps)(GameProgress);
