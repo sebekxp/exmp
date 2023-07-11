@@ -31,7 +31,7 @@ function Grid({ children, x, y }: GridPropsType) {
   const secondOverlayRef = useRef<HTMLCanvasElement | null>(null);
   const { tileSize, rows, columns, allTiles } = useDynamicGameDimensions();
   const radius = useMemo(() => REVEAL_CIRCLE_RADIUS / tileSize, [tileSize]);
-  let matrix = useMemo(() => generateMatrix(rows, columns), [rows, columns]);
+  const matrixRef = useRef(generateMatrix(rows, columns));
 
   /**
    * Clear the canvas and render random stars
@@ -47,24 +47,24 @@ function Grid({ children, x, y }: GridPropsType) {
    * Update the matrix based on character position and game state
    */
   useEffect(() => {
-    matrix = updateMatrix(matrix, x, y, rows, columns, radius);
-  }, [x, y]);
+    matrixRef.current = updateMatrix(matrixRef.current, x, y, rows, columns, radius);
+  }, [columns, radius, rows, x, y]);
 
   /**
    * Update the game progress based on visited tiles
    */
   useEffect(() => {
-    const visitedTiles = matrix.flat().filter((value) => value === 1).length;
+    const visitedTiles = matrixRef.current.flat().filter((value) => value === 1).length;
     const progress = visitedTiles / allTiles;
     dispatch(updateGameStatus(progress));
-  }, [x, y, matrix, dispatch, allTiles]);
+  }, [x, y, dispatch, allTiles]);
 
   /**
    * Reveal visible tiles on the canvas
    */
   useEffect(() => {
-    revealVisibleTiles(ctx, matrix, tileSize);
-  }, [ctx, x, y, tileSize, matrix]);
+    revealVisibleTiles(ctx, matrixRef.current, tileSize);
+  }, [ctx, x, y, tileSize]);
 
   return (
     <>
