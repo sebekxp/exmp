@@ -23,3 +23,5 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 A very simple implementation of the map discovery mechanism.
 We can move with the arrow keys and the w, a, s, d keys.
 We have a progress indicator and an intro page, and an end page when the player discovers 100% of the map
+
+https://github.com/sebekxp/exmp/assets/44967506/3739748e-828b-4de3-afe5-4872da93fedf
