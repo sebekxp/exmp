@@ -34,4 +34,5 @@ The gameplay continues until the player successfully uncovers 100% of the map. A
 
 While the project described is relatively simple, it serves as a foundation for more complex map discovery games or applications.
 
-https://github.com/sebekxp/exmp/assets/44967506/3739748e-828b-4de3-afe5-4872da93fedf
+https://github.com/sebekxp/exmp/assets/44967506/9cb778e5-1ad1-4ee7-9a05-10c939ac5be3
+
