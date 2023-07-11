@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 interface WindowSize {
   width: number;
@@ -8,24 +8,25 @@ interface WindowSize {
  * Hook that returns the current window size.
  * @returns Object containing the width and height of the window.
  */
-export function useWindowSize(): WindowSize {
+export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState<WindowSize>({
     width: window?.innerWidth ?? 0,
     height: window?.innerHeight ?? 0,
   });
+  const handleSize = () => {
+    setWindowSize({
+      width: window?.innerWidth ?? 0,
+      height: window?.innerHeight ?? 0,
+    });
+  };
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowSize({
-        width: window?.innerWidth ?? 0,
-        height: window?.innerHeight ?? 0,
-      });
-    }
+  useLayoutEffect(() => {
+    handleSize();
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleSize);
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleSize);
   }, []);
 
   return windowSize;
-}
+};
