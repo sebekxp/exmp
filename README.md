@@ -35,3 +35,18 @@ The gameplay continues until the player successfully uncovers 100% of the map. A
 While the project described is relatively simple, it serves as a foundation for more complex map discovery games or applications.
 
 https://github.com/sebekxp/exmp/assets/44967506/3739748e-828b-4de3-afe5-4872da93fedf
+
+## Stack
+
+The technological stack used in this project includes:
+
+- Next.js
+- React
+- Redux Toolkit
+- React Redux
+- TypeScript
+- Tailwind CSS
+- ESLint
+- Prettier
+- Autoprefixer
+- PostCSS
